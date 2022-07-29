@@ -24,17 +24,17 @@ $config = [
             'cookieValidationKey' => '8qGt0MV_Su5h_Avui-h0M9l3UWjhcr73',
             'baseUrl' => ''
         ],
+        'reCaptcha' => [
+            'class' => ReCaptchaConfig::class,
+            'siteKeyV3' => '6LeiaykhAAAAANdtkjx7T3gm6mgbhlJlvQ7HRgyu',
+            'secretV3' => '6LeiaykhAAAAACuwRPv2zv5xeapTwxLrE4UrRC35',
+        ],
         'cache' => [
             'class' => FileCache::class,
         ],
         'user' => [
             'identityClass' => User::class,
             'enableAutoLogin' => true,
-        ],
-        'reCaptcha' => [
-            'class' => ReCaptchaConfig::class,
-            'siteKeyV3' => '6LeiaykhAAAAANdtkjx7T3gm6mgbhlJlvQ7HRgyu',
-            'secretV3' => '6LeiaykhAAAAACuwRPv2zv5xeapTwxLrE4UrRC35',
         ],
         'errorHandler' => [
             'errorAction' => 'site/error',

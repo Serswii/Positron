@@ -18,8 +18,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'pageCount')->textInput() ?>
 
-    <?= $form->field($model, 'publishedDate')->textInput() ?>
-
     <?php
     if(isset($model->thumbnailUrl) && file_exists(Yii::getAlias('@webroot', $model->thumbnailUrl)))
     {

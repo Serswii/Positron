@@ -6,20 +6,28 @@
 $this->title = 'Positron';
 
 use himiklab\yii2\recaptcha\ReCaptcha3;
-use yii\captcha\Captcha;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
+
+//define('SITE_KEY', '6LeiaykhAAAAANdtkjx7T3gm6mgbhlJlvQ7HRgyu');
+//define('SECRET_KEY', '6LeiaykhAAAAACuwRPv2zv5xeapTwxLrE4UrRC35');
+//if(isset($_POST["submit"])){
+//    function getCaptcha($SecretKey){
+//        $Response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".SECRET_KEY."&response={$SecretKey}");
+//        return json_decode($Response);
+//    }
+//    $Return = getCaptcha($_POST["g-recaptcha-response"]);
+//    if($Return->success == true && $Return->score > 0.5){
+//        echo "Sucess!";
+//    }
+//
+//}
 ?>
 <div class="site-index">
 
     <div class="container">
         <div class="row flex-column">
-<!--            <section class="search box">-->
-<!--                <form action="--><?//= Url::to('/site/search') ?><!--" method="get">-->
-<!--                    <input type="text" class="text" name="search" placeholder="Поиск"/>-->
-<!--                </form>-->
-<!--            </section>-->
             <section class="book" style="display: flex; flex-wrap: wrap;">
             <?php foreach ($query as $item): ?>
                 <div class="card" style="width: 18rem; margin: 0 50px 50px 0; padding: 10px;">
@@ -43,19 +51,11 @@ use yii\widgets\ActiveForm;
             <div class="feedback-index col-lg-6" style="margin: auto;">
                 <?php $form = ActiveForm::begin(['id' => 'contact-form', 'options' => ['class' => 'form-horizontal']]); ?>
 
-                <?= $form->field($model, 'email') ?>
-                <?= $form->field($model, 'message') ?>
-                <?= $form->field($model, 'phone') ?>
-                <?= $form->field($model, 'name') ?>
-                <?= $form->field($model, 'reCaptcha')->widget(
-                    ReCaptcha3::className(),
-                    [
-                        'siteKey' => '6LeiaykhAAAAANdtkjx7T3gm6mgbhlJlvQ7HRgyu', // unnecessary is reCaptcha component was set up
-                        'action' => 'homepage',
-                    ]
-                ) ?>
-
-                <div class="form-group">
+                <?= $form->field($model, 'email')->textInput() ?>
+                <?= $form->field($model, 'message')->textarea(['rows' => 6]) ?>
+                <?= $form->field($model, 'phone')->textInput() ?>
+                <?= $form->field($model, 'name')->textInput() ?>
+                <?= $form->field($model, 'reCaptcha')->widget(ReCaptcha3::className())  ?>
                     <?= Html::submitButton(Yii::t('app', 'Отправить сообщение'), ['class' => 'btn btn-primary']) ?>
                 </div>
                 <?php ActiveForm::end(); ?>

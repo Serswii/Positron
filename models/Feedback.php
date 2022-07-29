@@ -32,16 +32,12 @@ class Feedback extends ActiveRecord
     public function rules()
     {
         return [
-            [['email', 'message'], 'required',
-                'message'=>'Ведите значение {attribute}'],
+            [['email', 'message'], 'required', 'message'=>'Ведите значение {attribute}'],
             [['message'], 'string'],
             [['phone'], 'string'],
             ['email', 'email', 'message'=>'Неправильно указана электронная почта'],
             [['name'], 'string', 'max' => 20, 'message'=>'Превышен допустимы лимит, не более 20'],
-            [['reCaptcha'], ReCaptchaValidator3::className(),
-                'secret' => '6LeiaykhAAAAACuwRPv2zv5xeapTwxLrE4UrRC35', // unnecessary if reСaptcha is already configured
-                'threshold' => 0.5,
-                'action' => 'homepage',],
+            [['reCaptcha'], ReCaptchaValidator3::className()],
         ];
     }
 
@@ -57,6 +53,7 @@ class Feedback extends ActiveRecord
             'name' => 'Имя',
             'message' => 'Сообщение',
             'phone' => 'Телефон',
+            'reCaptcha' => '',
         ];
     }
 

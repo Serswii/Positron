@@ -6,7 +6,6 @@ use app\models\Books;
 use app\models\BooksSearch;
 use Imagine\Imagick\Imagine;
 use Yii;
-use yii\imagine\Image;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -73,29 +72,26 @@ class BookController extends Controller
     public function actionCreate()
     {
         $model = new Books();
-        if ($this->request->isPost) {
             if ($model->load($this->request->post())) {
                 $file = UploadedFile::getInstance($model, 'file');
                 if ($file && $file->tempName) {
                     $model->file = $file;
-                    $dir = Yii::getAlias('images/books/');
-                    $fileName = $model->file->baseName . '.' . $model->file->extension;
-                    $model->file->saveAs($dir . $fileName);
-                    $model->file = $fileName; // без этого ошибка
-                    $model->thumbnailUrl = '/' . $dir . $fileName;
-                    $imagineObj = new Imagine();
-                    $imageObj = $imagineObj->open(Yii::getAlias('@webroot') . '/' . $dir . $fileName);
-                    $imageObj->resize($imageObj->getSize()->widen(400))->save(Yii::getAlias('@webroot') . '/' . $dir . $fileName);
-                    Yii::$app->controller->createDirectory(Yii::getAlias('images/books/thumbs'));
+                    if ($model->validate(['file'])) {
+                        $dir = Yii::getAlias('images/books/');
+                        $fileName = $model->file->baseName . '.' . $model->file->extension;
+                        $model->file->saveAs($dir . $fileName);
+                        $model->file = $fileName; // без этого ошибка
+                        $model->thumbnailUrl = '/' . $dir . $fileName;
+                        $imagineObj = new Imagine();
+                        $imageObj = $imagineObj->open(Yii::getAlias('@webroot') . '/' . $dir . $fileName);
+                        $imageObj->resize($imageObj->getSize()->widen(400))->save(Yii::getAlias('@webroot') . '/' . $dir . $fileName);
+                        Yii::$app->controller->createDirectory(Yii::getAlias('images/books/thumbs'));
+                    }
+                }
+                if ($this->request->isPost && $model->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
-            } else {
-                $model->loadDefaultValues();
             }
-        }
-        if ($model->save()) {
-            return $this->refresh();
-        }
         return $this->render('create', [
             'model' => $model,
         ]);
@@ -113,7 +109,8 @@ class BookController extends Controller
         $model = $this->findModel($id);
         $current_image = $model->thumbnailUrl;
         if ($model->load(Yii::$app->request->post())) {
-
+            $date = $model->getStatusDate($model->status);
+            $model->publishedDate = $date;
             $file = UploadedFile::getInstance($model, 'file');
             if ($file && $file->tempName) {
                 $model->file = $file;

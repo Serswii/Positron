@@ -21,7 +21,6 @@ AppAsset::register($this);
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
-    <script src="https://www.google.com/recaptcha/api.js"></script>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">

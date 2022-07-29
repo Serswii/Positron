@@ -26,6 +26,7 @@ class Books extends ActiveRecord
 {
     public $file; // атрибут для хранения загружаемой картинки статьи
     public $del_img; // атрибут для удаления уже загруженной картинки
+    const STATUS_PUBLISH = "PUBLISH";
 
     /**
      * {@inheritdoc}
@@ -80,5 +81,12 @@ class Books extends ActiveRecord
     public function getBookAuthors()
     {
         return $this->hasMany(BookAuthor::className(), ['id_book' => 'id']);
+    }
+
+    public function getStatusDate($status) {
+        if ($status === self::STATUS_PUBLISH){
+            return date("Y-m-d H:i:s");
+        }
+        return null;
     }
 }

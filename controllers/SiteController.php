@@ -73,12 +73,19 @@ class SiteController extends Controller
         $query = Books::find()->where(['status' => "PUBLISH"])->all();
         if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail']) && $model->save()) {
             Yii::$app->session->setFlash('contactFormSubmitted');
-            return $this->refresh();
+            return $this->redirect(['index']);
         }
 
         return $this->render('index', [
             'model' => $model,
             'query' => $query,
+        ]);
+    }
+    public function actionBookPost($id)
+    {
+        $model = BookAuthor::find()->where(['id_book' => $id])->all();
+        return $this->render('book-page', [
+            'model' => $model,
         ]);
     }
 
