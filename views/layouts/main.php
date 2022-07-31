@@ -42,6 +42,7 @@ AppAsset::register($this);
             ['label' => 'Редактирование книг', 'url' => ['/book/index'], 'visible' => Yii::$app->user->identity->username === 'admin'],
             ['label' => 'Редактирование авторов', 'url' => ['/author/index'], 'visible' => Yii::$app->user->identity->username === 'admin'],
             ['label' => 'Связывание авторов и книг', 'url' => ['/book-author/index'], 'visible' => Yii::$app->user->identity->username === 'admin'],
+            ['label' => 'JSON Parse', 'url' => ['/book/json-parse'], 'visible' => Yii::$app->user->identity->username === 'admin'],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (

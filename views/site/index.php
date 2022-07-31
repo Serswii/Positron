@@ -5,24 +5,14 @@
 
 $this->title = 'Positron';
 
+use app\models\Books;
+use app\models\Category;
 use himiklab\yii2\recaptcha\ReCaptcha3;
+use yii\base\BaseObject;
 use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 
-//define('SITE_KEY', '6LeiaykhAAAAANdtkjx7T3gm6mgbhlJlvQ7HRgyu');
-//define('SECRET_KEY', '6LeiaykhAAAAACuwRPv2zv5xeapTwxLrE4UrRC35');
-//if(isset($_POST["submit"])){
-//    function getCaptcha($SecretKey){
-//        $Response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=".SECRET_KEY."&response={$SecretKey}");
-//        return json_decode($Response);
-//    }
-//    $Return = getCaptcha($_POST["g-recaptcha-response"]);
-//    if($Return->success == true && $Return->score > 0.5){
-//        echo "Sucess!";
-//    }
-//
-//}
 ?>
 <div class="site-index">
 

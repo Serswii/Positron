@@ -14,7 +14,7 @@ class m220727_084049_create_category_table extends Migration
     {
         $this->createTable('{{%category}}', [
             'id' => $this->primaryKey(),
-            'category' => $this->string(),
+            'category' => $this->string()->unique(),
         ]);
     }
 

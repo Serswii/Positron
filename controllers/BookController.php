@@ -150,11 +150,21 @@ class BookController extends Controller
      * @return Response
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionDelete($id)
+    public function actionDelete($id): Response
     {
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
+    }
+
+    /**
+     * JSON Parse Books models.
+     *
+     * @return string
+     */
+    public function actionJsonParse(): string
+    {
+        return $this->render('json-parse');
     }
 
     /**

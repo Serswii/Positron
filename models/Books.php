@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use DateTime;
 use Yii;
+use yii\base\BaseObject;
 use yii\db\ActiveQuery;
 use yii\db\ActiveRecord;
 use yii\web\UploadedFile;
@@ -88,5 +90,51 @@ class Books extends ActiveRecord
             return date("Y-m-d H:i:s");
         }
         return null;
+    }
+    public function jsonParseUpdateDB(){
+        $url = file_get_contents("https://gitlab.com/prog-positron/test-app-vacancy/-/raw/master/books.json");
+
+        $content = json_decode($url,true);
+        foreach($content as $key => $subarray) {
+            $model = new Books();
+            var_dump($key);
+            foreach($subarray as $keys => $item){
+                if(is_array($item) && count($item)){
+                    var_dump($keys);
+                    foreach ($item as $key_array => $value){
+                        if($keys === "publishedDate"){
+                            $date = new DateTime($value);
+                            var_dump($key_array . "=>" . $date->format('Y-m-d H:i:s'));
+                        }else{
+                            var_dump($key_array. "=>" . $value);
+                        }
+                    }
+                }else{
+                    if ($keys === "categories"){
+                        $item = "Новинки";
+                        var_dump($keys. "=>" . $item);
+                    }else{
+                        var_dump($keys . "=>" . $item);
+                    }
+                }
+            }
+        }
+    }
+    public function checkCategoryDublicate($category): void
+    {
+        if (!empty($category)){
+            $model_category = new Category();
+            $checkCategory = Category::find()->where(['category'=>$category])->count();
+            if($checkCategory === "0"){
+                $model_category->category = $category;
+                $model_category->save();
+            }
+        }
+    }
+    public function is_file_url_exists($url) {
+        if (@file_get_contents($url, 0, NULL, 0, 1)) {
+            return true;
+        }
+        return false;
     }
 }
